@@ -38,7 +38,7 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
      *
      * @param $key
      * @param null $value
-     * @return $this
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function set($key, $value = null)
     {
@@ -80,7 +80,7 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
 
         $this->resetCollection();
 
-        return $this;
+        return $this->getModel($key);
     }
 
     /**
