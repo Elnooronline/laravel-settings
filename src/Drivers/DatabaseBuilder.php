@@ -24,7 +24,7 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
                 return array_get($array, $k);
             }
         }
-        $instance = $this->getCollection()->where('locale', $this->lang)->where('key', $key)->first();
+        $instance = $this->getModel($key);
 
         $value = optional($instance)->value;
 

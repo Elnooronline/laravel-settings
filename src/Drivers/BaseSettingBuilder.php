@@ -39,6 +39,11 @@ class BaseSettingBuilder
         return $model::query();
     }
 
+    public function getModel($key = null)
+    {
+        return $instance = $this->getCollection()->where('locale', $this->lang)->where('key', $key)->first();;
+    }
+
     /**
      * Set settings collection.
      *
