@@ -118,6 +118,6 @@ class BaseSettingBuilder
      */
     protected function getModelClassName()
     {
-        return Config::get('laravel_setting.model_class', SettingModel::class);
+        return Config::get('laravel_settings.model_class', SettingModel::class);
     }
 }
