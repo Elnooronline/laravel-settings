@@ -18,9 +18,7 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
     {
         if (strpos($key, '.') !== false) {
             $array = array_dot($this->get(($keys = explode('.', $key))[0]));
-            if (array_key_exists(
-                $k = preg_replace('/^([a-zA-Z0-9_-]+\.)/', '', $key), $array
-            )) {
+            if (array_key_exists($k = preg_replace('/^([a-zA-Z0-9_-]+\.)/', '', $key), $array)) {
                 return array_get($array, $k);
             }
         }
@@ -42,8 +40,9 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
      */
     public function set($key, $value = null)
     {
-
-        $value = $value && (is_string($value) || is_numeric($key)) ? $value : serialize($value);
+        if (is_array($value) || is_object($value)) {
+            $value = serialize($value);
+        }
 
         if (is_array($key)) {
             foreach ($key as $k => $val) {
