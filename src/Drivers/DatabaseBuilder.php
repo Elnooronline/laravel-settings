@@ -43,7 +43,7 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
     public function set($key, $value = null)
     {
 
-        $value = is_string($value) || is_numeric($key) ? $value : serialize($value);
+        $value = $value && (is_string($value) || is_numeric($key)) ? $value : serialize($value);
 
         if (is_array($key)) {
             foreach ($key as $k => $val) {
