@@ -43,7 +43,8 @@ class BaseSettingBuilder
     {
         $instance = $this->getCollection()->where('locale', $this->lang)->where('key', $key)->first();
         if (! $instance) {
-            return new $this->getModelClassName();
+            $model = $this->getModelClassName();
+            return new $model;
         }
 
         return $instance;
