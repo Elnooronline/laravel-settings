@@ -41,7 +41,12 @@ class BaseSettingBuilder
 
     public function getModel($key = null)
     {
-        return $instance = $this->getCollection()->where('locale', $this->lang)->where('key', $key)->first();;
+        $instance = $this->getCollection()->where('locale', $this->lang)->where('key', $key)->first();
+        if (! $instance) {
+            return new $this->getModelClassName();
+        }
+
+        return $instance;
     }
 
     /**
