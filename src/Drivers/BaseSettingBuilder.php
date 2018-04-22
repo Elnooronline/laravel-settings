@@ -32,8 +32,6 @@ class BaseSettingBuilder
 
     protected function query()
     {
-        $this->setCollection();
-
         $model = $this->getModelClassName();
 
         return $model::query();
