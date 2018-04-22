@@ -79,7 +79,7 @@ class BaseSettingBuilder
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    protected function getCollection()
+    public function getCollection()
     {
         return Cache::get('settings') ?: $this->settings;
     }
