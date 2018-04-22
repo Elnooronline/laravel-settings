@@ -142,8 +142,6 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
      */
     public function first($key)
     {
-        $this->setCollection();
-
         return $this->getCollection()->where('locale', $this->lang)->where('key', $key)->first();
     }
 

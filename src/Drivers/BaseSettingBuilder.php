@@ -33,7 +33,7 @@ class BaseSettingBuilder
     protected function query()
     {
         $this->setCollection();
-        
+
         $model = $this->getModelClassName();
 
         return $model::query();
@@ -44,6 +44,7 @@ class BaseSettingBuilder
         $instance = $this->getCollection()->where('locale', $this->lang)->where('key', $key)->first();
         if (! $instance) {
             $model = $this->getModelClassName();
+
             return new $model;
         }
 
@@ -83,6 +84,8 @@ class BaseSettingBuilder
      */
     public function getCollection()
     {
+        $this->setCollection();
+
         return Cache::get('settings') ?: $this->settings;
     }
 
