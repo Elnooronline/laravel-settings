@@ -16,6 +16,8 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
      */
     public function get($key, $default = null)
     {
+        $this->setCollection();
+
         if (strpos($key, '.') !== false) {
             $array = array_dot($this->get(($keys = explode('.', $key))[0]));
             if (array_key_exists($k = preg_replace('/^([a-zA-Z0-9_-]+\.)/', '', $key), $array)) {

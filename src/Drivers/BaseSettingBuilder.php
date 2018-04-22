@@ -28,8 +28,6 @@ class BaseSettingBuilder
         if (! $this->supportCache()) {
             $this->forgetCache();
         }
-
-        $this->setCollection();
     }
 
     protected function query()
@@ -70,7 +68,9 @@ class BaseSettingBuilder
                 return $this->query()->get();
             });
         } else {
-            $this->settings = $this->query()->get();
+            if (! $this->settings) {
+                $this->settings = $this->query()->get();
+            }
         }
     }
 
