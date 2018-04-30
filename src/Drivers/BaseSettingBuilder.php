@@ -20,16 +20,6 @@ class BaseSettingBuilder
      */
     protected $settings;
 
-    /**
-     * BaseSettingBuilder constructor.
-     */
-    public function __construct()
-    {
-        if (! $this->supportCache()) {
-            $this->forgetCache();
-        }
-    }
-
     protected function query()
     {
         $model = $this->getModelClassName();
@@ -57,21 +47,13 @@ class BaseSettingBuilder
     protected function resetCollection()
     {
         $this->lang = null;
-        $this->forgetCache();
-
         $this->setCollection();
     }
 
     protected function setCollection()
     {
-        if ($this->supportCache()) {
-            $this->settings = Cache::rememberForever('settings', function () {
-                return $this->query()->get();
-            });
-        } else {
-            if (! $this->settings) {
-                $this->settings = $this->query()->get();
-            }
+        if (! $this->settings) {
+            $this->settings = $this->query()->get();
         }
     }
 
@@ -84,29 +66,9 @@ class BaseSettingBuilder
     {
         $this->setCollection();
 
-        return Cache::get('settings') ?: $this->settings;
+        return $this->settings;
     }
-
-    /**
-     * Determine if the settings cache is supported.
-     *
-     * @return bool
-     */
-    protected function supportCache()
-    {
-        return ! ! Config::get('laravel_settings.cache');
-    }
-
-    /**
-     * Forget the settings cache.
-     *
-     * @return mixed
-     */
-    public function forgetCache()
-    {
-        return Cache::forget('settings');
-    }
-
+    
     /**
      * Set the setting locale.
      *

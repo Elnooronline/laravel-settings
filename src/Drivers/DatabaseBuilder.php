@@ -44,37 +44,23 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
             $value = serialize($value);
         }
 
+        $model = $this->getModelClassName();
         if (is_array($key)) {
             foreach ($key as $k => $val) {
-                if ($this->hasNot($k)) {
-                    $model = $this->getModelClassName();
-                    $setting = new $model;
-                    $setting->key = $k;
-                    $setting->value = $val;
-                    $setting->locale = $this->lang;
-                    $setting->save();
-                }
-                if ($this->isNot($k)) {
-                    $this->query()->where('key', $k)->where('locale', $this->lang)->update([
-                        'value' => $val,
-                    ]);
-                }
-            }
-        } else {
-            if ($this->hasNot($key)) {
-                $model = $this->getModelClassName();
-                $setting = new $model;
-                $setting->key = $key;
-                $setting->value = $value;
-                $setting->locale = $this->lang;
-                $setting->save();
-            }
-
-            if ($this->isNot($key, $value)) {
-                $this->query()->where('key', $key)->where('locale', $this->lang)->update([
-                    'value' => $value,
+                $model::updateOrCreate([
+                    'key' => $k,
+                    'locale' => $this->lang,
+                ], [
+                    'value' => $val,
                 ]);
             }
+        } else {
+            $model::updateOrCreate([
+                'key' => $key,
+                'locale' => $this->lang,
+            ], [
+                'value' => $value,
+            ]);
         }
 
         $this->resetCollection();
