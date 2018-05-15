@@ -47,6 +47,7 @@ class BaseSettingBuilder
     protected function resetCollection()
     {
         $this->lang = null;
+        $this->settings = null;
         $this->setCollection();
     }
 
