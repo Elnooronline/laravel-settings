@@ -27,6 +27,8 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
         $value = optional($instance)->value;
 
         $value = $value && $this->isSerialized($value) ? unserialize($value) : $value;
+        
+        $this->lang = null;
 
         return $value ?: $default;
     }
@@ -64,6 +66,8 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
         }
 
         $this->resetCollection();
+        
+        $this->lang = null;
 
         return $this->getModel($key);
     }
