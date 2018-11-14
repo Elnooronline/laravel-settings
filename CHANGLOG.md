@@ -1,5 +1,9 @@
 # Release Notes for Laravel settings
 
+## v4.0.0
+* Remove multiple drivers([cd1fc81](https://github.com/Elnooronline/laravel-settings/commit/1b644355090f3df9abf52cff9b02ea502dee2a52)).
+* Rename config file from `laravel_settings.php` to `laravel-settings.php`.
+
 ## v3.1.0
 * support dynamic conditions ([8169051](https://github.com/Elnooronline/laravel-settings/commit/57c2218ccc0d9e9ec67c087cde472c499757a4b5)).
 
