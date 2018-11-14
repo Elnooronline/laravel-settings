@@ -1,5 +1,8 @@
 # Release Notes for Laravel settings
 
+## v4.0.1
+* Fix issue in config name ([94885c8](https://github.com/Elnooronline/laravel-settings/commit/7333331ffb313cb90a79a63b0e708a5577f1e60f)).
+
 ## v4.0.0
 * Remove multiple drivers([cd1fc81](https://github.com/Elnooronline/laravel-settings/commit/1b644355090f3df9abf52cff9b02ea502dee2a52)).
 * Rename config file from `laravel_settings.php` to `laravel-settings.php`.
