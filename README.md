@@ -6,6 +6,7 @@
  * Simple key-value storage
  * Support multi-level array (dot delimited keys) structure.
  * Localization supported.
+ * Localization using [dimsav/laravel-translatable](https://github.com/dimsav/laravel-translatable)
 
 ## Installation
 
@@ -49,10 +50,16 @@ Setting::all();
 Setting::lang('en')->get('name', 'Computer');
 // get setting value with key and language
 
+Setting::get('name:en', 'Computer');
+// get setting value with key and language
+
 Setting::set('name', 'Computer');
 // set setting value by key
 
 Setting::lang('en')->set('name', 'Computer');
+// set setting value by key and language
+
+Setting::set('name:en', 'Computer');
 // set setting value by key and language
 
 Setting::has('name');
@@ -61,10 +68,16 @@ Setting::has('name');
 Setting::lang('en')->has('name');
 // check the key exists by language, return boolean
 
+Setting::has('name:en');
+// check the key exists by language, return boolean
+
 Setting::forget('name');
 // delete the setting by key
 
 Setting::lang('en')->forget('name');
+// delete the setting by key and language
+
+Setting::forget('name:en');
 // delete the setting by key and language
 ```
 
@@ -83,14 +96,6 @@ Setting::get('item');
 
 Setting::get('item.USB');
 // return '8G';
-```
-
-## Dealing with locale
-
-By default language parameter are being resets every set or get calls. You could disable that and set your own long term language parameter forever using any route service provider or other method.
-
-```php
-Setting::lang(App::getLocale())->langResetting(false);
 ```
 
 [ico-version]: https://img.shields.io/packagist/v/elnooronline/laravel-settings.svg?style=flat-square

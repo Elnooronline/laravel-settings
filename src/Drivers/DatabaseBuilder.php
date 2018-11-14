@@ -16,6 +16,8 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
      */
     public function get($key, $default = null)
     {
+        $this->supportLocaledKey($key);
+
         if (strpos($key, '.') !== false) {
             $parentKey = explode('.', $key)[0];
             $childrenKeysDoted = str_replace($parentKey.'.', '', $key);
@@ -60,6 +62,8 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
             $value = serialize($value);
         }
 
+        $this->supportLocaledKey($key);
+
         $model = $this->getModelClassName();
         if (is_array($key)) {
             foreach ($key as $k => $val) {
@@ -93,6 +97,8 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
      */
     public function forget($key)
     {
+        $this->supportLocaledKey($key);
+
         $table = $this->query()->getModel()->getTable();
 
         DB::table($table)->where('locale', $this->lang)->where('key', $key)->delete();
@@ -122,6 +128,8 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
      */
     public function has($key)
     {
+        $this->supportLocaledKey($key);
+
         return ! ! $this->first($key);
     }
 
@@ -174,5 +182,13 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
     private function isSerialized($str)
     {
         return ($str == serialize(false) || @unserialize($str) !== false);
+    }
+
+    private function supportLocaledKey(&$key)
+    {
+        if (strpos($key, ':') !== false) {
+            $this->lang = explode(':', $key)[1];
+            $key = explode(':', $key)[0];
+        }
     }
 }
