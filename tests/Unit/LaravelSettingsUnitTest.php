@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 use Elnooronline\LaravelSettings\Facades\Setting;
 use Elnooronline\LaravelSettings\Models\SettingModel;
@@ -159,5 +160,10 @@ class LaravelSettingsUnitTest extends TestCase
             'key' => '_foo__baz__country__eg_name',
         ]);
         $this->assertEquals(Setting::all()->count(), 2);
+    }
+
+    public function test_config_file()
+    {
+        $this->assertEquals(Config::get('laravel-settings.model_class'), SettingModel::class);
     }
 }

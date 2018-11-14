@@ -14,7 +14,7 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function boot()
     {
-        $this->mergeConfigFrom(__DIR__.'/../../config/laravel-settings.php', 'laravel_settings');
+        $this->mergeConfigFrom(__DIR__.'/../../config/laravel-settings.php', 'laravel-settings');
         $this->publishes([__DIR__.'/../../config/laravel-settings.php' => config_path('laravel-settings.php')], 'settings:config');
         $this->publishes([__DIR__.'/../../migrations' => database_path('migrations')], 'settings:migrations');
     }
