@@ -14,8 +14,8 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function boot()
     {
-        $this->mergeConfigFrom(__DIR__.'/../../config/laravel_settings.php', 'laravel_settings');
-        $this->publishes([__DIR__.'/../../config/laravel_settings.php' => config_path('laravel_settings.php')], 'settings:config');
+        $this->mergeConfigFrom(__DIR__.'/../../config/laravel-settings.php', 'laravel_settings');
+        $this->publishes([__DIR__.'/../../config/laravel-settings.php' => config_path('laravel-settings.php')], 'settings:config');
         $this->publishes([__DIR__.'/../../migrations' => database_path('migrations')], 'settings:migrations');
     }
 
@@ -27,7 +27,7 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->app->singleton('settings', function () {
-           return SettingBuilder::getInstance();
+           return new SettingBuilder();
         });
     }
 }
