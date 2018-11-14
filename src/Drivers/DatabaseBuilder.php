@@ -38,6 +38,16 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
     }
 
     /**
+     * Gel the collection of the settings.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function all()
+    {
+        return $this->getCollection();
+    }
+
+    /**
      * Update or set setting value.
      *
      * @param $key
