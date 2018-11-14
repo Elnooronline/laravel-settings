@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Config;
 use Elnooronline\LaravelSettings\Facades\Setting;
 use Elnooronline\LaravelSettings\Models\SettingModel;
 
