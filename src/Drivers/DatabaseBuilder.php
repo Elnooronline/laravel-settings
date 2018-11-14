@@ -17,11 +17,15 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
     public function get($key, $default = null)
     {
         if (strpos($key, '.') !== false) {
-            $array = array_dot($this->get(($keys = explode('.', $key))[0]));
-            if (array_key_exists($k = preg_replace('/^([a-zA-Z0-9_-]+\.)/', '', $key), $array)) {
-                return array_get($array, $k);
-            }
+            $parentKey = explode('.', $key)[0];
+            $childrenKeysDoted = str_replace($parentKey.'.', '', $key);
+
+            $value = optional($this->getModel($parentKey))->value;
+            $value = $value && $this->isSerialized($value) ? unserialize($value) : $value;
+
+            return data_get($value, $childrenKeysDoted) ?: $default;
         }
+
         $instance = $this->getModel($key);
 
         $value = optional($instance)->value;
