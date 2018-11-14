@@ -1,5 +1,9 @@
 # Release Notes for Laravel settings
 
+## v3.1.0
+* support dynamic conditions ([8169051](https://github.com/Elnooronline/laravel-settings/commit/57c2218ccc0d9e9ec67c087cde472c499757a4b5)).
+
+
 ## v3.0.1
 * support localed key using [dimsav/laravel-translatable](https://github.com/dimsav/laravel-translatable) ([61a27a6](https://github.com/Elnooronline/laravel-settings/commit/c7fc4fe2dfe07d3af9f71120d63c0e0e3e25ad84)).
 
