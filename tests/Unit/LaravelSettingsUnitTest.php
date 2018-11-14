@@ -135,4 +135,29 @@ class LaravelSettingsUnitTest extends TestCase
             'locale' => 'ar'
         ]);
     }
+
+    /** @test */
+    public function it_supported_the_key_prefix_condition()
+    {
+        Setting::registerPrefixMethod(['country', 'foo']);
+
+        Setting::country('us');
+        Setting::foo('bar');
+
+        Setting::set('name', 'Ahmed');
+
+        $this->assertEquals(Setting::get('name'), 'Ahmed');
+        $this->assertDatabaseHas('settings', [
+            'key' => '_foo__bar__country__us_name',
+        ]);
+        $this->assertEquals(Setting::all()->count(), 1);
+        Setting::country('eg');
+        Setting::foo('baz');
+
+        Setting::set('name', 'Omar');
+        $this->assertDatabaseHas('settings', [
+            'key' => '_foo__baz__country__eg_name',
+        ]);
+        $this->assertEquals(Setting::all()->count(), 2);
+    }
 }

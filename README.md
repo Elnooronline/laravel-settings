@@ -98,6 +98,30 @@ Setting::get('item.USB');
 // return '8G';
 ```
 
+## Conditions
+> in your `AppServiceProvider` you can register new prefix method.
+```php
+public function boot()
+{
+	Setting::registerPrefixMethod('country');
+	...
+}
+```
+```php
+Setting::country('us')->set('title', 'Example Website');
+
+Setting::get('name');
+// return return 'Example Website';
+
+Setting::country('eg')->set('title', 'عنوان الموقع');
+
+Setting::country('eg')->get('name');
+// return return 'عنوان الموقع';
+
+Setting::country('eg')->forget('name');
+// delete the setting by key and country
+```
+
 [ico-version]: https://img.shields.io/packagist/v/elnooronline/laravel-settings.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
 

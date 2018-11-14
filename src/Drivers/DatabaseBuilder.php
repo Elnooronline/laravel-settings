@@ -16,6 +16,8 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
      */
     public function get($key, $default = null)
     {
+        $this->supportPrefix($key);
+
         $this->supportLocaledKey($key);
 
         if (strpos($key, '.') !== false) {
@@ -62,6 +64,7 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
             $value = serialize($value);
         }
 
+        $this->supportPrefix($key);
         $this->supportLocaledKey($key);
 
         $model = $this->getModelClassName();
@@ -97,6 +100,7 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
      */
     public function forget($key)
     {
+        $this->supportPrefix($key);
         $this->supportLocaledKey($key);
 
         $table = $this->query()->getModel()->getTable();
@@ -128,6 +132,7 @@ class DatabaseBuilder extends BaseSettingBuilder implements SettingContract
      */
     public function has($key)
     {
+        $this->supportPrefix($key);
         $this->supportLocaledKey($key);
 
         return ! ! $this->first($key);

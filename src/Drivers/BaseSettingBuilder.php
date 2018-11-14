@@ -5,6 +5,7 @@ namespace Elnooronline\LaravelSettings\Drivers;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Elnooronline\LaravelSettings\Models\SettingModel;
+use Prophecy\Exception\Doubler\MethodNotFoundException;
 
 class BaseSettingBuilder
 {
@@ -20,6 +21,39 @@ class BaseSettingBuilder
      */
     protected $settings;
 
+    /**
+     * @var string
+     */
+    protected $prefix;
+
+    /**
+     * @var array
+     */
+    protected $prefixMethods = [];
+
+    /**
+     * @var array
+     */
+    protected $conditions = [];
+
+    /**
+     * @param $name
+     * @param $arguments
+     * @return $this
+     * @throws \Prophecy\Exception\Doubler\MethodNotFoundException
+     */
+    public function __call($name, $arguments)
+    {
+        if (in_array($name, $this->prefixMethods)) {
+            $this->conditions[$name] = array_first($arguments);
+            return $this;
+        }
+        throw new MethodNotFoundException("{$name}() method not found!", __CLASS__, $name);
+    }
+
+    /**
+     * @return \Illuminate\Database\Query\Builder
+     */
     protected function query()
     {
         $model = $this->getModelClassName();
@@ -92,4 +126,64 @@ class BaseSettingBuilder
     {
         return Config::get('laravel_settings.model_class', SettingModel::class);
     }
+
+    /**
+     * Register custom prefix method.
+     *
+     * @param array|string $method
+     * @return $this
+     */
+    public function registerPrefixMethod($method)
+    {
+        if (is_array($method)) {
+            $this->prefixMethods = $method;
+
+            return $this;
+        }
+
+        $this->prefixMethods = func_get_args();
+
+        return $this;
+    }
+
+    /**
+     * Set the global conditions.
+     *
+     * @param array $conditions
+     * @return $this
+     */
+    public function setConditions(array $conditions = [])
+    {
+        $this->conditions = $conditions;
+        return $this;
+    }
+
+    protected function supportPrefix(&$key)
+    {
+        $this->withPrefix();
+
+        if ($this->prefix) {
+            $key = "{$this->prefix}{$key}";
+        }
+    }
+
+    public function hasPrefix($method)
+    {
+        preg_match("/($method)__/", $this->prefix, $matches);
+
+        return isset($matches[1]) && $matches[1] == $method;
+    }
+
+    public function withPrefix()
+    {
+
+        foreach ($this->conditions as $k => $condition) {
+            if ($this->hasPrefix($k)) {
+                $this->prefix = preg_replace("/($k)__([a-zA-Z0-9]+)/", "$1__$condition", $this->prefix);
+            }else{
+                $this->prefix = "_{$k}__{$condition}_{$this->prefix}";
+            }
+        }
+    }
+
 }
