@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Elnooronline\LaravelSettings\Facades\Setting;
+use Elnooronline\LaravelSettings\Models\SettingModel;
 
 class LaravelSettingsUnitTest extends TestCase
 {
@@ -54,5 +55,63 @@ class LaravelSettingsUnitTest extends TestCase
 
         $this->assertEquals(Setting::get('user.name'), 'Ahmed Fathy');
         $this->assertEquals(Setting::get('user.tag.name'), 'Laravel');
+    }
+
+    /** @test */
+    public function it_returns_unique_value_of_localed_data()
+    {
+        Setting::lang('en')->set('language', 'English');
+        Setting::lang('ar')->set('language', 'Arabic');
+
+        $this->assertEquals(Setting::lang('en')->get('language'), 'English');
+        $this->assertEquals(Setting::lang('ar')->get('language'), 'Arabic');
+
+        Setting::lang('en')->set('language', 'English');
+
+        $this->assertEquals(SettingModel::where(['locale' => 'en', 'key' => 'language'])->count(), 1);
+    }
+
+    /** @test */
+    public function it_determine_if_the_value_exists()
+    {
+        Setting::set('name', 'Ahmed');
+
+        $this->assertTrue(Setting::has('name'));
+
+        Setting::lang('en')->set('language', 'English');
+
+        $this->assertTrue(Setting::lang('en')->has('language'));
+    }
+
+    /** @test */
+    public function it_can_deleted_the_specific_key()
+    {
+        Setting::set('name', 'Ahmed');
+
+        $this->assertTrue(Setting::has('name'));
+
+        Setting::forget('name');
+
+        $this->assertFalse(Setting::has('name'));
+
+        $this->assertDatabaseMissing('settings', [
+            'key' => 'name'
+        ]);
+
+        Setting::lang('en')->set('name', 'Ahmed');
+        Setting::lang('ar')->set('name', 'احمد');
+
+        $this->assertTrue(Setting::lang('en')->has('name'));
+        $this->assertTrue(Setting::lang('ar')->has('name'));
+
+        Setting::lang('en')->forget('name');
+
+        $this->assertFalse(Setting::lang('en')->has('name'));
+        $this->assertTrue(Setting::lang('ar')->has('name'));
+
+        $this->assertDatabaseMissing('settings', [
+            'key' => 'name',
+            'locale' => 'en'
+        ]);
     }
 }
