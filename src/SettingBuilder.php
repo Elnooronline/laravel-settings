@@ -147,9 +147,7 @@ class SettingBuilder
      */
     public function getModel($key = null)
     {
-        if (! $this->hasAnyPrefix($key)) {
-            $this->supportPrefix($key);
-        }
+        $this->supportPrefix($key);
 
         $this->supportLocaledKey($key);
 
@@ -161,19 +159,6 @@ class SettingBuilder
         }
 
         return $instance;
-    }
-
-    /**
-     * Determine whether the key has any prefix.
-     *
-     * @param $key
-     * @return bool
-     */
-    private function hasAnyPrefix($key)
-    {
-        preg_match("/^_(.*)__/", $key, $matches);
-
-        return isset($matches[0]) && ! ! $matches[0];
     }
 
     /**
