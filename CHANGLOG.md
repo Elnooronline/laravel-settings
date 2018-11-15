@@ -1,5 +1,8 @@
 # Release Notes for Laravel settings
 
+## v4.1.1
+* Add ide helpers for autocomplete ([8f53192](https://github.com/Elnooronline/laravel-settings/commit/1330a26ffc67d41582a405f3e5fc9d2f436317bd)).
+
 ## v4.1.0
 * Add prefix_methods to config ([d3c98d0](https://github.com/Elnooronline/laravel-settings/commit/899964ee53509ef686afec46d375ed45a7822d75)).
 * Add global conditions feature ([871edc3](https://github.com/Elnooronline/laravel-settings/commit/9e3826ca3c6b0285fbb2d8779d7cbb9e489aea1f)).

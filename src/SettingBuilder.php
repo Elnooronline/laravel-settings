@@ -251,7 +251,7 @@ class SettingBuilder
      */
     private function getModelClassName()
     {
-        return Config::get('laravel_settings.model_class', SettingModel::class);
+        return Config::get('laravel-settings.model_class', SettingModel::class);
     }
 
     private function isSerialized($str)

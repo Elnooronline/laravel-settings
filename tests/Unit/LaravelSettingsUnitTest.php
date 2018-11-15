@@ -206,4 +206,9 @@ class LaravelSettingsUnitTest extends TestCase
         ]);
     }
 
+    /** @test */
+    public function it_returns_model_after_set_value()
+    {
+        $this->assertInstanceOf(SettingModel::class, Setting::set('foo', 'bar'));
+    }
 }
