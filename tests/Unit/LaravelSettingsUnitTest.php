@@ -174,6 +174,7 @@ class LaravelSettingsUnitTest extends TestCase
         $this->assertEquals(Config::get('laravel-settings.model_class'), SettingModel::class);
     }
 
+    /** @test */
     public function it_can_set_global_prefix_conditions()
     {
         Config::set('laravel-settings.global_conditions', [
