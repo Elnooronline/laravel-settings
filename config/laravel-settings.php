@@ -25,4 +25,18 @@ return [
     'prefix_methods' => [
         //
     ],
+
+    /**
+     * The global prefix conditions.
+     * Ex:
+     * 'global_conditions' => [
+     *      'country' => 'us'
+     *  ],
+     *
+     * Usage:
+     * Setting::set('title', 'Website')
+     */
+    'global_conditions' => [
+        //
+    ]
 ];

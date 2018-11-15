@@ -33,8 +33,8 @@ class LaravelSettingsUnitTest extends TestCase
             'name' => 'Ahmed Fathy',
             'phone' => '021207687151',
             'tag' => [
-                'name' => 'Laravel'
-            ]
+                'name' => 'Laravel',
+            ],
         ];
         Setting::set('user', $array);
 
@@ -49,8 +49,8 @@ class LaravelSettingsUnitTest extends TestCase
             'name' => 'Ahmed Fathy',
             'phone' => '021207687151',
             'tag' => [
-                'name' => 'Laravel'
-            ]
+                'name' => 'Laravel',
+            ],
         ]);
 
         Setting::set('user', $collection);
@@ -110,7 +110,7 @@ class LaravelSettingsUnitTest extends TestCase
         $this->assertFalse(Setting::has('name'));
 
         $this->assertDatabaseMissing('settings', [
-            'key' => 'name'
+            'key' => 'name',
         ]);
 
         Setting::lang('en')->set('name', 'Ahmed');
@@ -126,7 +126,7 @@ class LaravelSettingsUnitTest extends TestCase
 
         $this->assertDatabaseMissing('settings', [
             'key' => 'name',
-            'locale' => 'en'
+            'locale' => 'en',
         ]);
         Setting::forget('name:ar');
         $this->assertFalse(Setting::lang('ar')->has('name'));
@@ -134,7 +134,7 @@ class LaravelSettingsUnitTest extends TestCase
 
         $this->assertDatabaseMissing('settings', [
             'key' => 'name',
-            'locale' => 'ar'
+            'locale' => 'ar',
         ]);
     }
 
@@ -172,5 +172,19 @@ class LaravelSettingsUnitTest extends TestCase
     public function test_config_file()
     {
         $this->assertEquals(Config::get('laravel-settings.model_class'), SettingModel::class);
+    }
+
+    public function it_can_set_global_prefix_conditions()
+    {
+        Config::set('laravel-settings.global_conditions', [
+            'country' => 'iq',
+        ]);
+
+        Setting::set('title', 'Website');
+
+        $this->assertDatabaseHas('settings', [
+            'key' => '_country__iq_title',
+            'value' => 'Website',
+        ]);
     }
 }

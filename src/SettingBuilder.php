@@ -42,6 +42,23 @@ class SettingBuilder
     public function __construct()
     {
         $this->prefixMethods = Config::get('laravel-settings.prefix_methods', []);
+
+        $this->setConditions(
+            Config::get('laravel-settings.global_conditions', [])
+        );
+    }
+
+    /**
+     * Set the global conditions.
+     *
+     * @param array $conditions
+     * @return $this
+     */
+    public function setConditions(array $conditions = [])
+    {
+        $this->conditions = $conditions;
+
+        return $this;
     }
 
     /**
@@ -88,19 +105,6 @@ class SettingBuilder
         }
 
         $this->prefixMethods = func_get_args();
-
-        return $this;
-    }
-
-    /**
-     * Set the global conditions.
-     *
-     * @param array $conditions
-     * @return $this
-     */
-    public function setConditions(array $conditions = [])
-    {
-        $this->conditions = $conditions;
 
         return $this;
     }
