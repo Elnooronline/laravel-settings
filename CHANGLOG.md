@@ -1,5 +1,9 @@
 # Release Notes for Laravel settings
 
+
+## v4.1.3
+* Fix issue in getModel() method ([1274f3e](https://github.com/Elnooronline/laravel-settings/commit/6a34b8e914d78dfd42f6be4fb2d772a54902fb87)).
+
 ## v4.1.2
 * Fix config issue ([1330a26](https://github.com/Elnooronline/laravel-settings/commit/7996f5041ad5b527de52e2d741a01468955e64b0)).
 
