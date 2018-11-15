@@ -1,5 +1,8 @@
 # Release Notes for Laravel settings
 
+## v4.1.2
+* Fix config issue ([1330a26](https://github.com/Elnooronline/laravel-settings/commit/7996f5041ad5b527de52e2d741a01468955e64b0)).
+
 ## v4.1.1
 * Add ide helpers for autocomplete ([8f53192](https://github.com/Elnooronline/laravel-settings/commit/1330a26ffc67d41582a405f3e5fc9d2f436317bd)).
 
