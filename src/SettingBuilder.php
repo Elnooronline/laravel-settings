@@ -172,20 +172,6 @@ class SettingBuilder
     }
 
     /**
-     * Clear prefix conditions.
-     *
-     * @return $this
-     */
-    public function withoutPrefix()
-    {
-        $this->prefix = null;
-
-        $this->conditions = [];
-
-        return $this;
-    }
-
-    /**
      * Determine whether the prefix already exists.
      *
      * @param $method
@@ -274,6 +260,20 @@ class SettingBuilder
     }
 
     /**
+     * Clear prefix conditions.
+     *
+     * @return $this
+     */
+    public function withoutPrefix()
+    {
+        $this->prefix = null;
+
+        $this->conditions = [];
+
+        return $this;
+    }
+
+    /**
      * Gel the collection of the settings.
      *
      * @return \Illuminate\Database\Eloquent\Collection
@@ -341,6 +341,7 @@ class SettingBuilder
      * Delete the specified setting instance.
      *
      * @param $key
+     * @return void
      */
     public function forget($key)
     {
@@ -358,6 +359,7 @@ class SettingBuilder
      * Delete the specified setting instance for all languages.
      *
      * @param $key
+     * @return void
      */
     public function forgetAll($key)
     {
