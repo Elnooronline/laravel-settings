@@ -172,6 +172,20 @@ class SettingBuilder
     }
 
     /**
+     * Clear prefix conditions.
+     *
+     * @return $this
+     */
+    public function withoutPrefix()
+    {
+        $this->prefix = null;
+
+        $this->conditions = [];
+
+        return $this;
+    }
+
+    /**
      * Determine whether the prefix already exists.
      *
      * @param $method

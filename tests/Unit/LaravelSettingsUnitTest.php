@@ -188,4 +188,22 @@ class LaravelSettingsUnitTest extends TestCase
             'value' => 'Website',
         ]);
     }
+
+    /** @test */
+    public function it_can_clear_prefix_when_using_prefix_conditions()
+    {
+        Config::set('laravel-settings.global_conditions', [
+            'country' => 'iq',
+        ]);
+
+        Setting::withoutPrefix();
+
+        Setting::set('title', 'Website');
+
+        $this->assertDatabaseHas('settings', [
+            'key' => 'title',
+            'value' => 'Website',
+        ]);
+    }
+
 }
