@@ -1,5 +1,10 @@
 # Release Notes for Laravel settings
 
+## v4.1.0
+* Add prefix_methods to config ([d3c98d0](https://github.com/Elnooronline/laravel-settings/commit/899964ee53509ef686afec46d375ed45a7822d75)).
+* Add global conditions feature ([871edc3](https://github.com/Elnooronline/laravel-settings/commit/9e3826ca3c6b0285fbb2d8779d7cbb9e489aea1f)).
+* add withoutPrefix() method ([f24411b](https://github.com/Elnooronline/laravel-settings/commit/8ee6f9206d939648e60ec7884c61e90b754a96bb)).
+
 ## v4.0.1
 * Fix issue in config name ([94885c8](https://github.com/Elnooronline/laravel-settings/commit/7333331ffb313cb90a79a63b0e708a5577f1e60f)).
 
