@@ -140,6 +140,43 @@ class SettingBuilder
     }
 
     /**
+     * Get the model instance for the specified key.
+     *
+     * @param null $key
+     * @return \Elnooronline\LaravelSettings\Models\SettingModel
+     */
+    public function getModel($key = null)
+    {
+        if (! $this->hasAnyPrefix($key)) {
+            $this->supportPrefix($key);
+        }
+
+        $this->supportLocaledKey($key);
+
+        $instance = $this->getCollection()->where('locale', $this->lang)->where('key', $key)->first();
+        if (! $instance) {
+            $model = $this->getModelClassName();
+
+            return new $model;
+        }
+
+        return $instance;
+    }
+
+    /**
+     * Determine whether the key has any prefix.
+     *
+     * @param $key
+     * @return bool
+     */
+    private function hasAnyPrefix($key)
+    {
+        preg_match("/^_(.*)__/", $key, $matches);
+
+        return isset($matches[0]) && ! ! $matches[0];
+    }
+
+    /**
      * @param $key
      * @return void
      */
@@ -181,19 +218,6 @@ class SettingBuilder
     }
 
     /**
-     * Determine whether the key has any prefix.
-     *
-     * @param $key
-     * @return bool
-     */
-    private function hasAnyPrefix($key)
-    {
-        preg_match("/^_(.*)__/", $key, $matches);
-
-        return isset($matches[0]) && !!$matches[0];
-    }
-
-    /**
      * Update lang if the key has the language.
      *
      * @param $key
@@ -204,30 +228,6 @@ class SettingBuilder
             $this->lang = explode(':', $key)[1];
             $key = explode(':', $key)[0];
         }
-    }
-
-    /**
-     * Get the model instance for the specified key.
-     *
-     * @param null $key
-     * @return \Elnooronline\LaravelSettings\Models\SettingModel
-     */
-    public function getModel($key = null)
-    {
-        if (! $this->hasAnyPrefix($key)) {
-            $this->supportPrefix($key);
-        }
-
-        $this->supportLocaledKey($key);
-
-        $instance = $this->getCollection()->where('locale', $this->lang)->where('key', $key)->first();
-        if (! $instance) {
-            $model = $this->getModelClassName();
-
-            return new $model;
-        }
-
-        return $instance;
     }
 
     /**
