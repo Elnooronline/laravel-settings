@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Elnooronline\LaravelSettings\SettingBuilder;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Config;
 use Elnooronline\LaravelSettings\Facades\Setting;
@@ -140,7 +141,7 @@ class LaravelSettingsUnitTest extends TestCase
     /** @test */
     public function it_supported_the_key_prefix_condition()
     {
-        Setting::registerPrefixMethod(['country', 'foo']);
+        Config::set('laravel-settings.prefix_methods', ['country', 'foo']);
 
         Setting::country('us');
         Setting::foo('bar');
@@ -160,6 +161,12 @@ class LaravelSettingsUnitTest extends TestCase
             'key' => '_foo__baz__country__eg_name',
         ]);
         $this->assertEquals(Setting::all()->count(), 2);
+
+        Config::set('laravel-settings.prefix_methods', []);
+
+        Setting::registerPrefixMethod('country');
+
+        $this->assertInstanceOf(SettingBuilder::class, Setting::country('us'));
     }
 
     public function test_config_file()

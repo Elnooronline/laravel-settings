@@ -12,4 +12,17 @@ return [
      *   }
      */
     'model_class' => \Elnooronline\LaravelSettings\Models\SettingModel::class,
+
+    /**
+     * The registered prefix methods.
+     * Ex:
+     * 'prefix_methods' => [
+     *      'country'
+     *  ],
+     * Usage:
+     * Setting::country('us')->set('title', 'Website')
+     */
+    'prefix_methods' => [
+        //
+    ],
 ];

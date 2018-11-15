@@ -37,6 +37,14 @@ class SettingBuilder
     private $conditions = [];
 
     /**
+     * SettingBuilder constructor.
+     */
+    public function __construct()
+    {
+        $this->prefixMethods = Config::get('laravel-settings.prefix_methods', []);
+    }
+
+    /**
      * @param $name
      * @param $arguments
      * @return $this
