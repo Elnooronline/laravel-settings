@@ -218,5 +218,19 @@ class LaravelSettingsUnitTest extends TestCase
         Setting::set('foo', 'bar');
 
         $this->assertInstanceOf(SettingModel::class, Setting::getModel('foo'));
+
+        Setting::lang('en')->set('title', 'Website');
+
+        $this->assertEquals(Setting::getModel('title:en')->value, 'Website');
+
+        Setting::forgetAll('title');
+
+        Config::set('laravel-settings.global_conditions', [
+            'country' => 'iq',
+        ]);
+
+        Setting::set('title', 'Website');
+
+        $this->assertEquals(Setting::getModel('title')->value, 'Website');
     }
 }

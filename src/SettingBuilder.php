@@ -118,10 +118,6 @@ class SettingBuilder
      */
     public function get($key, $default = null)
     {
-        $this->supportPrefix($key);
-
-        $this->supportLocaledKey($key);
-
         if (strpos($key, '.') !== false) {
             $parentKey = explode('.', $key)[0];
             $childrenKeysDoted = str_replace($parentKey.'.', '', $key);
@@ -185,6 +181,19 @@ class SettingBuilder
     }
 
     /**
+     * Determine whether the key has any prefix.
+     *
+     * @param $key
+     * @return bool
+     */
+    private function hasAnyPrefix($key)
+    {
+        preg_match("/^_(.*)__/", $key, $matches);
+
+        return isset($matches[0]) && !!$matches[0];
+    }
+
+    /**
      * Update lang if the key has the language.
      *
      * @param $key
@@ -205,6 +214,12 @@ class SettingBuilder
      */
     public function getModel($key = null)
     {
+        if (! $this->hasAnyPrefix($key)) {
+            $this->supportPrefix($key);
+        }
+
+        $this->supportLocaledKey($key);
+
         $instance = $this->getCollection()->where('locale', $this->lang)->where('key', $key)->first();
         if (! $instance) {
             $model = $this->getModelClassName();
