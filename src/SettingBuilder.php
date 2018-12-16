@@ -5,6 +5,7 @@ namespace Elnooronline\LaravelSettings;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use Elnooronline\LaravelSettings\Models\SettingModel;
+use Illuminate\Support\Facades\Schema;
 use Prophecy\Exception\Doubler\MethodNotFoundException;
 
 class SettingBuilder
@@ -118,6 +119,10 @@ class SettingBuilder
      */
     public function get($key, $default = null)
     {
+        if (! $this->isConfiguredDatabase()) {
+            return null;
+        }
+
         if (strpos($key, '.') !== false) {
             $parentKey = explode('.', $key)[0];
             $childrenKeysDoted = str_replace($parentKey.'.', '', $key);
@@ -288,10 +293,14 @@ class SettingBuilder
      *
      * @param $key
      * @param null $value
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return null|\Illuminate\Database\Eloquent\Model
      */
     public function set($key, $value = null)
     {
+        if (! $this->isConfiguredDatabase()) {
+            return null;
+        }
+
         if (is_array($value) || is_object($value)) {
             $value = serialize($value);
         }
@@ -428,5 +437,19 @@ class SettingBuilder
     public function isNot($key, $value)
     {
         return $this->has($key) && $this->first($key)->value != $value;
+    }
+
+    /**
+     * Determine whether the database is configured.
+     *
+     * @return bool
+     */
+    private function isConfiguredDatabase()
+    {
+        try {
+            return Schema::hasTable('settings');
+        } catch (\Exception $e) {}
+
+        return false;
     }
 }
