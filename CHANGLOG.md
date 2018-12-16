@@ -1,6 +1,10 @@
 # Release Notes for Laravel settings
 
 
+## v4.1.4
+* Fix artisan exception when the database is not configured ([ab30584](https://github.com/Elnooronline/laravel-settings/commit/ab305844a4ffd1c443e415872d77312e4c32c57f)).
+
+
 ## v4.1.3
 * Fix issue in getModel() method ([1274f3e](https://github.com/Elnooronline/laravel-settings/commit/6a34b8e914d78dfd42f6be4fb2d772a54902fb87)).
 
