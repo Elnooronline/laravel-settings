@@ -17,6 +17,8 @@ class CreateSettingsTable extends Migration
             $table->string('key')->index();
             $table->text('value')->nullable();
             $table->string('locale')->nullable();
+            $table->nullableMorphs('model');
+            $table->unique(['key', 'locale']);
         });
     }
 

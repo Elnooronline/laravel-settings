@@ -4,9 +4,11 @@ namespace Elnooronline\LaravelSettings;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
-use Elnooronline\LaravelSettings\Models\SettingModel;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Model;
+use Elnooronline\LaravelSettings\Models\SettingModel;
 use Prophecy\Exception\Doubler\MethodNotFoundException;
+use Elnooronline\LaravelSettings\Models\Traits\HasSettings;
 
 class SettingBuilder
 {
@@ -21,6 +23,11 @@ class SettingBuilder
      * @var \Illuminate\Database\Eloquent\Collection
      */
     private $settings;
+
+    /**
+     * @var \Illuminate\Database\Eloquent\Model
+     */
+    protected $model;
 
     /**
      * @var string
@@ -137,7 +144,7 @@ class SettingBuilder
 
         $value = optional($instance)->value;
 
-        $value = $value && $this->isSerialized($value) ? unserialize($value) : $value;
+        $value = unserialize($value);
 
         $this->lang = null;
 
@@ -246,7 +253,11 @@ class SettingBuilder
     {
         $model = $this->getModelClassName();
 
-        return $model::query();
+        if ($this->model) {
+            return $this->model->getSettings();
+        }
+
+        return $model::query()->whereNull('model_id')->whereNull('model_type');
     }
 
     /**
@@ -285,6 +296,8 @@ class SettingBuilder
      */
     public function all()
     {
+        $this->model = null;
+
         return $this->getCollection();
     }
 
@@ -301,17 +314,22 @@ class SettingBuilder
             return null;
         }
 
-        if (is_array($value) || is_object($value)) {
-            $value = serialize($value);
-        }
+        $value = serialize($value);
 
         $this->supportPrefix($key);
         $this->supportLocaledKey($key);
 
         $model = $this->getModelClassName();
+
+        $query = $model::query();
+
+        if ($this->model) {
+            $query = $this->model->getSettings();
+        }
+
         if (is_array($key)) {
             foreach ($key as $k => $val) {
-                $model::updateOrCreate([
+                $query->updateOrCreate([
                     'key' => $k,
                     'locale' => $this->lang,
                 ], [
@@ -319,7 +337,7 @@ class SettingBuilder
                 ]);
             }
         } else {
-            $model::updateOrCreate([
+            $query->updateOrCreate([
                 'key' => $key,
                 'locale' => $this->lang,
             ], [
@@ -343,6 +361,7 @@ class SettingBuilder
     {
         $this->lang = null;
         $this->settings = null;
+        $this->model = null;
         $this->setCollection();
     }
 
@@ -451,5 +470,28 @@ class SettingBuilder
         } catch (\Exception $e) {}
 
         return false;
+    }
+
+    /**
+     * Set the model instance.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @return $this
+     * @throws \Exception
+     */
+    public function for(Model $model)
+    {
+        if (! in_array(HasSettings::class, class_uses($model))) {
+            $trait = HasSettings::class;
+            $class = get_class($model);
+            throw new \Exception("You must import '{$trait}' in class '{$class}'");
+        }
+        $this->model = $model;
+
+        $this->settings = null;
+
+        $this->setCollection();
+
+        return $this;
     }
 }

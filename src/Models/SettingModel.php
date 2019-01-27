@@ -49,4 +49,23 @@ class SettingModel extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+        //'model'
+    ];
+
+    /**
+     * The model that associated the settings.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function model()
+    {
+        return $this->morphTo('model');
+    }
 }

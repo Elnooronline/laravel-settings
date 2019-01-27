@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Elnooronline\LaravelSettings\SettingBuilder setConditions(array $conditions = [])
  * @method static \Elnooronline\LaravelSettings\SettingBuilder lang($lang = null)
  * @method static \Elnooronline\LaravelSettings\SettingBuilder registerPrefixMethod($method)
+ * @method static \Elnooronline\LaravelSettings\SettingBuilder for($model)
  * @package Elnooronline\LaravelSettings\Facades
  */
 class Setting extends Facade

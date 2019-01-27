@@ -2,8 +2,12 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Tests\TestCase;
+use Tests\Models\TestModel;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Database\Eloquent\Collection;
 use Elnooronline\LaravelSettings\SettingBuilder;
 use Elnooronline\LaravelSettings\Facades\Setting;
 use Elnooronline\LaravelSettings\Models\SettingModel;
@@ -232,5 +236,44 @@ class LaravelSettingsUnitTest extends TestCase
         Setting::set('title', 'Website');
 
         $this->assertEquals(Setting::getModel('title')->value, 'Website');
+    }
+
+    public function test_setings_relationship()
+    {
+        $user = TestModel::create([
+            'name' => 'Ahmed',
+            'email' => 'ahmed@example.com',
+            'password' => Hash::make('secret'),
+        ]);
+
+        $this->assertInstanceOf(Collection::class, $user->getSettings);
+        $this->assertInstanceOf(MorphMany::class, $user->getSettings());
+    }
+
+    /** @test */
+    public function it_can_add_custom_settings_to_model()
+    {
+        $user = TestModel::create([
+            'name' => 'Ahmed',
+            'email' => 'ahmed@example.com',
+            'password' => Hash::make('secret'),
+        ]);
+
+        $user2 = TestModel::create([
+            'name' => 'Ahmed',
+            'email' => 'user2@example.com',
+            'password' => Hash::make('secret'),
+        ]);
+
+        Setting::set('foo', 'bar');
+
+        Setting::for($user)->set('like_notification', true);
+
+        Setting::for($user2)->set('like_notification', false);
+        Setting::for($user2)->set('foo', 'baz');
+
+        $this->assertEquals(1, Setting::all()->count());
+        $this->assertEquals(1, Setting::for($user)->all()->count());
+        $this->assertEquals(2, Setting::for($user2)->all()->count());
     }
 }

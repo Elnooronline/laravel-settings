@@ -153,6 +153,30 @@ Setting::country('eg')->get('name');
 Setting::country('eg')->forget('name');
 // delete the setting by key and country
 ```
+
+> You can also add custom settings to specific model using `HasSettings` trait like the following examole :
+```php
+<?php
+
+namespace App;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Elnooronline\LaravelSettings\Models\Traits\HasSettings;
+
+class User extends Authenticatable
+{
+    use HasSettings;
+    ...
+}
+```
+#### Usage
+```php
+$user->settings()->set('key', 'value');
+$user->settings()->get('key', 'value');
+// Or
+Seeting::for($user)->set('key', 'value');
+Seeting::for($user)->set('key', 'value');
+```
  
 [ico-version]: https://img.shields.io/packagist/v/elnooronline/laravel-settings.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
