@@ -466,7 +466,10 @@ class SettingBuilder
     private function isConfiguredDatabase()
     {
         try {
-            return Schema::hasTable('settings');
+            return Schema::hasTable('settings') &&
+                Schema::hasColumns('settings', [
+                    'key', 'value', 'locale', 'model_type', 'model_id'
+                ]);
         } catch (\Exception $e) {}
 
         return false;
