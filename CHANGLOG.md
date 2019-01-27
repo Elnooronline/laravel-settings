@@ -1,6 +1,10 @@
 # Release Notes for Laravel settings
 
 
+## v5.0.1
+* Fix `isConfiguredDatabase()` method ([e521249](https://github.com/Elnooronline/laravel-settings/commit/e521249bac7520779cf32ccba6479f84e98d437a)).
+
+
 ## v5.0.0
 * Add custom settings to the specific model ([92daa0c](https://github.com/Elnooronline/laravel-settings/commit/92daa0c24d5d8f1858e245ee966879dd5671ef5a)).
 
