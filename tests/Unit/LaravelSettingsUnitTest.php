@@ -189,7 +189,7 @@ class LaravelSettingsUnitTest extends TestCase
 
         $this->assertDatabaseHas('settings', [
             'key' => '_country__iq_title',
-            'value' => 'Website',
+            'value' => serialize('Website'),
         ]);
     }
 
@@ -206,7 +206,7 @@ class LaravelSettingsUnitTest extends TestCase
 
         $this->assertDatabaseHas('settings', [
             'key' => 'title',
-            'value' => 'Website',
+            'value' => serialize('Website'),
         ]);
     }
 
@@ -225,7 +225,7 @@ class LaravelSettingsUnitTest extends TestCase
 
         Setting::lang('en')->set('title', 'Website');
 
-        $this->assertEquals(Setting::getModel('title:en')->value, 'Website');
+        $this->assertEquals(Setting::getModel('title:en')->value, serialize('Website'));
 
         Setting::forgetAll('title');
 
@@ -235,7 +235,7 @@ class LaravelSettingsUnitTest extends TestCase
 
         Setting::set('title', 'Website');
 
-        $this->assertEquals(Setting::getModel('title')->value, 'Website');
+        $this->assertEquals(Setting::getModel('title')->value, serialize('Website'));
     }
 
     public function test_setings_relationship()
