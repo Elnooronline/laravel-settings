@@ -1,6 +1,9 @@
 # Release Notes for Laravel settings
 
 
+## v5.0.12
+* Fix tests & reset locale ([f112c29](https://github.com/Elnooronline/laravel-settings/commit/f112c2983c1ec516e870f5eeaef3a9d97fec8dc4)).
+
 ## v5.0.1
 * Fix `isConfiguredDatabase()` method ([e521249](https://github.com/Elnooronline/laravel-settings/commit/e521249bac7520779cf32ccba6479f84e98d437a)).
 
