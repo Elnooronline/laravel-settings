@@ -1,6 +1,10 @@
 # Release Notes for Laravel settings
 
 
+## v5.0.0
+* Add custom settings to the specific model ([92daa0c](https://github.com/Elnooronline/laravel-settings/commit/92daa0c24d5d8f1858e245ee966879dd5671ef5a)).
+
+
 ## v4.1.4
 * Fix artisan exception when the database is not configured ([ab30584](https://github.com/Elnooronline/laravel-settings/commit/ab305844a4ffd1c443e415872d77312e4c32c57f)).
 
