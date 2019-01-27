@@ -14,7 +14,7 @@ trait HasSettings
      */
     public function settings()
     {
-        return Setting::for($this);
+        return Setting::for($this)->lang();
     }
 
     /**
