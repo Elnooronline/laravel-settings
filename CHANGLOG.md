@@ -1,6 +1,9 @@
 # Release Notes for Laravel settings
 
 
+## v65.0.12.0
+* Add primary increments column ([73b7eb9](https://github.com/Elnooronline/laravel-settings/commit/73b7eb947ee18f3846cf279e8e9353c2a032f3db)).
+
 ## v5.0.12
 * Fix tests & reset locale ([f112c29](https://github.com/Elnooronline/laravel-settings/commit/f112c2983c1ec516e870f5eeaef3a9d97fec8dc4)).
 
