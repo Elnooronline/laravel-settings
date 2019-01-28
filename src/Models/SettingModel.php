@@ -23,41 +23,11 @@ class SettingModel extends Model
     ];
 
     /**
-     * The primary key for the model.
-     *
-     * @var null
-     */
-    protected $primaryKey = 'key';
-
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
-
-    /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
-
-    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
      */
     public $timestamps = false;
-
-    /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = [
-        //'model'
-    ];
 
     /**
      * The model that associated the settings.
