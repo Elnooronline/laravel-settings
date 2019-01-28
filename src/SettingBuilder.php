@@ -13,6 +13,11 @@ use Elnooronline\LaravelSettings\Models\Traits\HasSettings;
 class SettingBuilder
 {
     /**
+     * @var \Illuminate\Database\Eloquent\Model
+     */
+    protected $model;
+
+    /**
      * @var string
      */
     private $lang;
@@ -23,11 +28,6 @@ class SettingBuilder
      * @var \Illuminate\Database\Eloquent\Collection
      */
     private $settings;
-
-    /**
-     * @var \Illuminate\Database\Eloquent\Model
-     */
-    protected $model;
 
     /**
      * @var string
@@ -148,7 +148,33 @@ class SettingBuilder
 
         $this->lang = null;
 
+        if ($this->model) {
+            $this->resetCollection();
+        }
+
         return $value ?: $default;
+    }
+
+    /**
+     * Determine whether the database is configured.
+     *
+     * @return bool
+     */
+    private function isConfiguredDatabase()
+    {
+        try {
+            return Schema::hasTable('settings') &&
+                Schema::hasColumns('settings', [
+                    'key',
+                    'value',
+                    'locale',
+                    'model_type',
+                    'model_id',
+                ]);
+        } catch (\Exception $e) {
+        }
+
+        return false;
     }
 
     /**
@@ -276,6 +302,19 @@ class SettingBuilder
     }
 
     /**
+     * Set settings collection.
+     *
+     * @return void
+     */
+    private function resetCollection()
+    {
+        $this->lang = null;
+        $this->settings = null;
+        $this->model = null;
+        $this->setCollection();
+    }
+
+    /**
      * Clear prefix conditions.
      *
      * @return $this
@@ -350,19 +389,6 @@ class SettingBuilder
         $this->lang = null;
 
         return $this->getModel($key);
-    }
-
-    /**
-     * Set settings collection.
-     *
-     * @return void
-     */
-    private function resetCollection()
-    {
-        $this->lang = null;
-        $this->settings = null;
-        $this->model = null;
-        $this->setCollection();
     }
 
     /**
@@ -456,23 +482,6 @@ class SettingBuilder
     public function isNot($key, $value)
     {
         return $this->has($key) && $this->first($key)->value != $value;
-    }
-
-    /**
-     * Determine whether the database is configured.
-     *
-     * @return bool
-     */
-    private function isConfiguredDatabase()
-    {
-        try {
-            return Schema::hasTable('settings') &&
-                Schema::hasColumns('settings', [
-                    'key', 'value', 'locale', 'model_type', 'model_id'
-                ]);
-        } catch (\Exception $e) {}
-
-        return false;
     }
 
     /**
