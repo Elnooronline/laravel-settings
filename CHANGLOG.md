@@ -1,10 +1,12 @@
 # Release Notes for Laravel settings
 
+## v6.0.1
+* Reset collection after get value ([bb846e8](https://github.com/Elnooronline/laravel-settings/commit/bb846e83faa7106de4803e2fafed6a231c733317)).
 
-## v65.0.12.0
+## v6.0.0
 * Add primary increments column ([73b7eb9](https://github.com/Elnooronline/laravel-settings/commit/73b7eb947ee18f3846cf279e8e9353c2a032f3db)).
 
-## v5.0.12
+## v5.0.2
 * Fix tests & reset locale ([f112c29](https://github.com/Elnooronline/laravel-settings/commit/f112c2983c1ec516e870f5eeaef3a9d97fec8dc4)).
 
 ## v5.0.1
