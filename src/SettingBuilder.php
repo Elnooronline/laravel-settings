@@ -353,6 +353,8 @@ class SettingBuilder
             return null;
         }
 
+        $this->resetCollection();
+
         $value = serialize($value);
 
         $this->supportPrefix($key);
@@ -385,8 +387,6 @@ class SettingBuilder
         }
 
         $this->resetCollection();
-
-        $this->lang = null;
 
         return $this->getModel($key);
     }
