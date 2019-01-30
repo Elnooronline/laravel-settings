@@ -1,5 +1,8 @@
 # Release Notes for Laravel settings
 
+## v6.0.3
+* Fix issue in `set()` method ([073dd87](https://github.com/Elnooronline/laravel-settings/commit/073dd876c5b346f259fee70ddc3f8ac7f0d2a0f9)).
+
 ## v6.0.2
 * Fix issue in `set()` method ([264440f](https://github.com/Elnooronline/laravel-settings/commit/264440ffe0e2a6a1064e688661acc293dfba9412)).
 
