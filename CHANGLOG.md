@@ -1,5 +1,8 @@
 # Release Notes for Laravel settings
 
+## v6.0.2
+* Fix issue in `set()` method ([264440f](https://github.com/Elnooronline/laravel-settings/commit/264440ffe0e2a6a1064e688661acc293dfba9412)).
+
 ## v6.0.1
 * Reset collection after get value ([bb846e8](https://github.com/Elnooronline/laravel-settings/commit/bb846e83faa7106de4803e2fafed6a231c733317)).
 
