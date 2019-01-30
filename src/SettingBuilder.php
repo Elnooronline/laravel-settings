@@ -353,8 +353,6 @@ class SettingBuilder
             return null;
         }
 
-        $this->resetCollection();
-
         $value = serialize($value);
 
         $this->supportPrefix($key);
